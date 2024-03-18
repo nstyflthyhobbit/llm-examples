@@ -15,6 +15,22 @@ if "messages" not in st.session_state:
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
+if "user_name" not in st.session_state:
+    st.session_state.user_name = None
+
+# Ask for the user's name
+user_name = st.text_input("Please enter your name:")
+
+# Save the user's name
+if user_name:
+    st.session_state.user_name = user_name
+
+# Display a personalized message
+if st.session_state.user_name:
+    st.write(f"Hello, {st.session_state.user_name}! Let's start the lesson.")
+else:
+    st.write("Please enter your name to begin the lesson.")
+
 if prompt := st.chat_input():
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
